@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shrey's Boyfriend Test ❤️</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,#ffd6e7,#fff1f6,#eadcff);display:flex;justify-content:center;align-items:center;padding:20px;color:#4a2940}
+.game{width:100%;max-width:650px;background:#fff;padding:30px;border-radius:28px;box-shadow:0 15px 50px #7b426633;text-align:center}
+.heart{font-size:55px;animation:pulse 1.4s infinite}@keyframes pulse{50%{transform:scale(1.15)}}
+h1{font-size:30px;margin:10px 0}.question{font-size:21px;font-weight:bold;margin:25px 0 18px}
+.options{display:grid;gap:12px}button{border:0;padding:15px;border-radius:15px;font-size:16px;cursor:pointer;background:#ffe1ed;color:#56283f;transition:.2s}
+button:hover{transform:translateY(-2px);background:#ffc7dc}
+.start,.next{background:#c94f83;color:white;font-weight:bold;margin-top:20px;padding:15px 30px}
+.hidden{display:none}.message{min-height:28px;margin-top:18px;font-weight:bold}.score{font-size:28px;font-weight:bold;margin:20px}.small{font-size:14px;opacity:.7;margin-top:15px}
+</style>
+</head>
+<body>
+<div class="game">
+<div id="start">
+<div class="heart">❤️</div>
+<h1>Shrey's Girlfriend Test</h1>
+<p>Okay Shrey... let's see how well you REALLY know your girlfriend. 👀</p>
+<p>This isn't just a quiz.<br>This is a test of your boyfriend credentials. 😌</p>
+<button class="start" onclick="startGame()">Accept The Challenge 💘</button>
+<p class="small">Warning: Wrong answers may result in dramatic girlfriend reactions. 😂</p>
+</div>
+<div id="quiz" class="hidden">
+<div id="num"></div><div class="question" id="q"></div><div class="options" id="opts"></div><div class="message" id="msg"></div>
+<button class="next hidden" id="next" onclick="nextQ()">Next Question 💕</button><p class="small" id="progress"></p>
+</div>
+<div id="result" class="hidden">
+<div class="heart">💖</div><h1>Boyfriend Test Complete!</h1><div class="score" id="score"></div><p id="final"></p>
+<button class="start" onclick="location.reload()">Try Again 😈</button><p class="small">Remember: the girlfriend is always watching. 👀❤️</p>
+</div>
+</div>
+<script>
+const questions=[
+["Let's start easy... What is my favourite kind of food? 🍽️",["Italian 🍝","Punjabi / North Indian 🥘","Chinese 🥡","Japanese 🍣"],1],
+["Which outfit is MOST likely to make me feel pretty? 👗",["A cute dress ✨","Oversized hoodie 🧸","Traditional Indian outfit 👑","Jeans + casual top 💕"],2],
+["What kind of date would I secretly LOVE? 💕",["Super expensive fine dining 🍷","A cute, relaxed date with good food & conversations 🌙","A crowded nightclub 🪩","Going shopping for 6 hours 🛍️"],1],
+["What is my ideal little rainy-day combination? 🌧️",["Coffee + gym","Chai + butta + rain ☕🌽","Protein shake + Netflix","Pizza + gaming"],1],
+["If I had to choose between a peaceful evening and a crazy party...",["Crazy party 🪩","Peaceful, cosy evening ❤️","Depends on the day 😌","I'd disappear into the mountains 🏔️"],1],
+["What kind of coffee do I actually like? ☕",["Very strong black coffee","Espresso shot","Cappuccino 🤎","Cold brew"],2],
+["Which sweet treat would probably win me over? 🍫",["Snickers 🍫","Plain dark chocolate","Gummy bears","Nothing sweet"],0],
+["What's more important on a date? 👀",["How expensive the place is","Taking perfect pictures","The vibe + quality time together ❤️","Getting home early"],2],
+["If I say 'I'm fine'... what should you probably do? 😭",["Say okay and leave me alone","Ask me once and forget about it","Know that something is probably going on 👀","Start giving me life advice"],2],
+["What would make me happier? 💐",["A random thoughtful surprise","An extremely expensive gift","A generic gift card","Nothing"],0],
+["TRICK QUESTION 😈 — What matters more to me?",["Grand gestures","Consistency + little thoughtful things ❤️","Money","Showing off"],1],
+["FINAL BOSS 👑 — What does your girlfriend probably want most from you?",["For you to always be perfect","For you to read her mind","To feel loved, understood, chosen and appreciated ❤️","For you to buy her everything"],2]
+];
+let i=0,score=0,answered=false;
+function startGame(){document.getElementById("start").classList.add("hidden");document.getElementById("quiz").classList.remove("hidden");showQ()}
+function showQ(){answered=false;let x=questions[i];document.getElementById("num").innerText="Question "+(i+1)+" of "+questions.length;document.getElementById("q").innerText=x[0];document.getElementById("progress").innerText="Boyfriend Level: "+Math.round(i/questions.length*100)+"%";document.getElementById("msg").innerText="";document.getElementById("next").classList.add("hidden");let o=document.getElementById("opts");o.innerHTML="";x[1].forEach((a,n)=>{let b=document.createElement("button");b.innerText=a;b.onclick=()=>answer(n);o.appendChild(b)})}
+function answer(n){if(answered)return;answered=true;let x=questions[i];document.querySelectorAll("#opts button").forEach(b=>b.disabled=true);if(n===x[2]){score++;document.getElementById("msg").innerText="CORRECT! 😭❤️ Okayyy Shrey, you actually know her!"}else document.getElementById("msg").innerText="WRONG 😭💀 Girlfriend.exe has stopped responding.";document.getElementById("next").classList.remove("hidden")}
+function nextQ(){i++;if(i<questions.length)showQ();else results()}
+function results(){document.getElementById("quiz").classList.add("hidden");document.getElementById("result").classList.remove("hidden");document.getElementById("score").innerText=score+" / "+questions.length;let p=score/questions.length*100,m;if(p===100)m="EXCUSE ME??? 😭❤️ FULL MARKS! Shrey officially knows his girlfriend way too well. You have passed the boyfriend test with flying colours. Now go collect your reward. 💋🏆";else if(p>=80)m="Okay Mr. Boyfriend 😌❤️ You clearly pay attention! Not perfect... but definitely boyfriend material. A few more details and you'll unlock girlfriend's secret level. 🔐💗";else if(p>=60)m="Hmmmm... 😭 You know her, but there is still some homework left. Better start paying attention to the little things, Shrey. 👀❤️";else m="SHREY. 😭 We need to have a conversation. The boyfriend training programme begins TODAY. 😂❤️ Better luck next time!";document.getElementById("final").innerText=m}
+</script>
+</body>
+</html>
